@@ -7,7 +7,7 @@ const AdminHomePage = () => {
             <div className="w-full h-max flex gap-5 p-5">
                 <NavLink to={"/admin/credit-debit"} className={"w-1/2 h-60"}>
                     <div className="w-full h-full border border-gray-300 rounded shadow flex justify-center cursor-pointer items-center">
-                        MAKE A TRANSACTION
+                        MAKE A DEPOSIT
                     </div>
                 </NavLink>
                 <NavLink to={"/admin/users"} className={"w-1/2 h-60"}>

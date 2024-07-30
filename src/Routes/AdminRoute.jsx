@@ -1,11 +1,12 @@
+import { useSelector } from "react-redux";
 import {Navigate} from "react-router-dom";
 
 const AdminRoute = ({element, children}) => {
-    const isAdmin = true;
-    const isLoggedIn = "";
+    const userData=useSelector((user)=>user?.bankAppStore?.user)
+    const isAdmin = userData?.isAdmin;
+    console.log(isAdmin)
 
-
-    return isAdmin ? (
+    return isAdmin === "true" ? (
         children ? (
             <>{children}</>
         ) : (

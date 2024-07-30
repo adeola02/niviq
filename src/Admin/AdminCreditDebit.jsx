@@ -1,4 +1,19 @@
+import { useState } from "react";
+
 const AdminCreditDebit = () => {
+    const [accountNumber,setAccountNumber]=useState();
+    const [amount,setAmount]=useState();
+
+    const handleAccountNumber=(e)=>{
+     const newData=e.target.value;
+        setAccountNumber(newData);
+    }
+
+    const handleAmount=(e)=>{
+      const newData=e.target.value
+        setAmount(newData)
+    }
+
     return (
         <div className="w-full h-[80vh] ">
             <div className="w-full h-full flex items-center justify-center">
@@ -9,6 +24,7 @@ const AdminCreditDebit = () => {
                             type="number"
                             className="w-full h-10 rounded border border-gray-300 shadow pl-3"
                             placeholder="enter account number"
+                            onChange={handleAccountNumber}
                         />
                     </div>
                     <div className="w-max h-max px-4 py-1 bg-slate-500 rounded-full text-xs font-semibold text-white">
@@ -32,6 +48,7 @@ const AdminCreditDebit = () => {
                             type="number"
                             className="w-full h-10 rounded border border-gray-300 shadow pl-3"
                             placeholder="enter amount"
+                            onChange={handleAmount}
                         />
                     </div>
                     <div className="w-full h-max flex flex-col gap-2">

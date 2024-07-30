@@ -1,4 +1,4 @@
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import logo from "../assets/LOGO.png";
 import {MdDarkMode, MdDashboard} from "react-icons/md";
 import {FaRegUser} from "react-icons/fa6";
@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 function User() {
     const [showUserBox, setShowUserBox] = useState(false);
-    const user=useSelector((state)=>state.bankAppStore.user)
+    const user=useSelector((state)=>state.bankAppStore.user);
+    const Navigate=useNavigate();
     return (
         <div className="w-full h-screen flex">
             <div className="w-[25%] h-full ">
@@ -121,7 +122,7 @@ function User() {
                                 <div className="w-full h-10 rounded shadow-md flex items-center pl-2 cursor-pointer justify-between pr-2">
                                     Toggle Mode <MdDarkMode size={22} />
                                 </div>
-                                <div className="w-full h-10 rounded shadow-md flex items-center pl-2 text-red-500 cursor-pointer">
+                                <div className="w-full h-10 rounded shadow-md flex items-center pl-2 text-red-500 cursor-pointer" onClick={()=>Navigate("/login")}>
                                     Logout
                                 </div>
                             </span>

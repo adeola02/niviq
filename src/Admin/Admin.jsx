@@ -3,9 +3,11 @@ import logo from "../assets/LOGO.png";
 import {MdDarkMode, MdDashboard} from "react-icons/md";
 import {FaRegUser} from "react-icons/fa6";
 import {useState} from "react";
+import { useSelector } from "react-redux";
 
 function Admin() {
     const [showAdminBox, setShowAdminBox] = useState(false);
+    const admin=useSelector((admin)=>admin.bankAppStore.user)
     return (
         <div className="w-full h-screen flex">
             <div className="w-[20%] h-full ">
@@ -93,14 +95,14 @@ function Admin() {
             </div>
             <div className="h-full w-[80%] p-4 flex flex-col gap-2">
                 <div className="w-full h-20 flex items-center justify-between shadow border border-gray-200 rounded px-4">
-                    <div className="w-max">Hello AbdulQuadri</div>
+                    <div className="w-max">Hello {admin.fullname.split(" ")[0]}</div>
                     <div className="w-max h-max">
                         <div
                             className="w-max h-10 bg-[rgb(117,126,214)]  rounded-full flex items-center px-4 cursor-pointer gap-2 relative"
                             onClick={() => setShowAdminBox(!showAdminBox)}
                         >
                             <FaRegUser />
-                            <p className="text-white">Akintunde AbdulQuadri</p>
+                            <p className="text-white">{admin.fullname.split(" ")[0]}</p>
                             <span
                                 className={`w-60 h-max py-3 px-2 rounded flex flex-col gap-3 bg-white shadow-lg border-2 absolute right-[-22px] top-14 toggle-dropdown ${
                                     showAdminBox ? " active" : ""

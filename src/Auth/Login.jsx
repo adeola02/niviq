@@ -1,21 +1,20 @@
-import { FaRegEye,FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import hero from "../assets/hero.png";
 import logo from "../assets/LOGO.png";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { bankUser } from "../Global/features";
 
 const Login = () => {
-    const nav = useNavigate();
-    const dispatch=useDispatch();
+  const nav = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [password, setPassWord] = useState("");
   const [passWordError, setPassWordError] = useState(false);
-  const [showPassWord,setShowPassWord]=useState(false);
- 
+  const [showPassWord, setShowPassWord] = useState(false);
 
   const handleEmail = (e) => {
     const newData = e.target.value;
@@ -39,26 +38,30 @@ const Login = () => {
     }
   };
 
-  const handleLogin=()=>{
-    if(!email || !password){
-        alert("please input datas")
-    }else{
-        const datas={email,password}
-        const url ="https://bank-app-z92e.onrender.com/login";
-        axios.post(url,datas)
-        .then((res)=>{
-            dispatch(bankUser(res?.data.data))
-            nav("/user/home")
+  const handleLogin = () => {
+    if (!email || !password) {
+      alert("please input datas");
+    } else {
+      const datas = { email, password };
+      const url = "https://bank-app-z92e.onrender.com/login";
+      axios
+        .post(url, datas)
+        .then((res) => {
+          dispatch(bankUser(res?.data?.data));
+          setTimeout(() => {
+            
+              if (res?.data?.data?.isAdmin === "true") {
+                nav("/admin/home");
+              } else if(res?.data?.data?.isAdmin === "false") {
+                nav("/user/home");
+              }
+          }, 2000);
         })
-        .catch((err)=>{
-            console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }
-
- 
-
-
+  };
 
   return (
     <div className="w-full h-screen flex p-4">
@@ -98,19 +101,18 @@ const Login = () => {
               <p className="text-sm">Password</p>
               <div className="w-full h-10 flex items-center rounded border border-gray-300 shadow pr-2">
                 <input
-                  type={showPassWord?"text":"password"}
+                  type={showPassWord ? "text" : "password"}
                   className="w-full outline-none pl-3"
                   placeholder="Create a password with unique characters"
                   value={password}
                   onChange={handlePassWord}
                 />
                 <span className="w-max h-max cursor-pointer">
-                    {
-                        showPassWord ? 
-                        <FaRegEyeSlash onClick={()=>setShowPassWord(false)} />
-                        :
-                        <FaRegEye size={18} onClick={()=>setShowPassWord(true)} />
-                    }
+                  {showPassWord ? (
+                    <FaRegEyeSlash onClick={() => setShowPassWord(false)} />
+                  ) : (
+                    <FaRegEye size={18} onClick={() => setShowPassWord(true)} />
+                  )}
                 </span>
               </div>
               {passWordError ? (
@@ -119,7 +121,10 @@ const Login = () => {
             </div>
           </div>
           <div className="w-full h-max flex flex-col items-center gap-3">
-            <button className="w-full h-10 rounded bg-[#8c4cfb] text-white" onClick={handleLogin}>
+            <button
+              className="w-full h-10 rounded bg-[#8c4cfb] text-white"
+              onClick={handleLogin}
+            >
               Continue
             </button>
             <NavLink to={"/reset-password"}>

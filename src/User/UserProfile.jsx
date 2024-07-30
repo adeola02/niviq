@@ -1,11 +1,30 @@
 import {Modal} from "antd";
+import axios from "axios";
 import {useState} from "react";
 import {FaRegEye} from "react-icons/fa6";
+import { useSelector } from "react-redux";
 // import {toast} from "react-toastify";
 
 const UserProfile = () => {
     const [openPassword, setOpenPassword] = useState(false);
     const [openPIN, setOpenPIN] = useState(false);
+    const[pin, setPin]=useState("");
+    const userData =useSelector((e)=>e.bankAppStore.user);
+
+    const create=()=>{
+    //     const data=(pin)
+    //   const url =`https://bank-app-z92e.onrender.com/createPin/${userData._id}`
+      axios.put(`https://bank-app-z92e.onrender.com/createPin/${userData._id}`,{pin})
+      .then((res)=>(
+        console.log(res)
+      ))
+      .catch((err)=>{
+        console.log(err)
+      })
+     }
+    
+    
+
     return (
         <>
             <div className="w-full h-max flex flex-col gap-5 p-5">
@@ -20,7 +39,7 @@ const UserProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Akintunde"}
+                                    value={userData.fullname.split(" ")[0]}
                                     disabled
                                 />
                             </div>
@@ -29,7 +48,7 @@ const UserProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Abdulquadri"}
+                                    value={userData.fullname.split(" ")[1]}
                                     disabled
                                 />
                             </div>
@@ -40,7 +59,7 @@ const UserProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"akintundeabdulquadri@gmail.com"}
+                                value={userData.email}
                                 disabled
                             />
                         </div>
@@ -49,7 +68,7 @@ const UserProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"akintundeabdulquadri@gmail.com"}
+                                value={userData.phoneNumber}
                                 disabled
                             />
                         </div>
@@ -58,7 +77,7 @@ const UserProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"10-04-1960"}
+                                value={userData.dob}
                                 disabled
                             />
                         </div>
@@ -67,7 +86,7 @@ const UserProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"Lagos"}
+                                value={userData.address}
                                 disabled
                             />
                         </div>
@@ -77,7 +96,7 @@ const UserProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Gay"}
+                                    value={userData.gender}
                                     disabled
                                 />
                             </div>
@@ -86,7 +105,7 @@ const UserProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Savings"}
+                                    value={userData.methodOfSavings}
                                     disabled
                                 />
                             </div>
@@ -102,7 +121,7 @@ const UserProfile = () => {
                                 className="w-max h-max px-4 py-2 rounded-full bg-green-700 text-white text-sm"
                                 onClick={() => setOpenPIN(true)}
                             >
-                                Change PIN
+                                Create PIN
                             </button>
                         </div>
                     </div>
@@ -125,6 +144,7 @@ const UserProfile = () => {
                                 type="password"
                                 className="w-full outline-none pl-3"
                                 placeholder="Enter old PIN"
+                                onChange={(e)=>setPin(e.target.value)}
                             />
                             <span className="w-max h-max cursor-pointer">
                                 <FaRegEye size={18} />
@@ -139,6 +159,7 @@ const UserProfile = () => {
                                 type="password"
                                 className="w-full outline-none pl-3"
                                 placeholder="Create a PIN"
+                               
                             />
                             <span className="w-max h-max cursor-pointer">
                                 <FaRegEye size={18} />
@@ -146,6 +167,7 @@ const UserProfile = () => {
                             </span>
                         </div>
                     </div>
+                        <button style={{cursor:"pointer",background:"green",color:"white",width:"3rem"}} onClick={create}>done</button>
                 </div>
             </Modal>
             <Modal
@@ -165,6 +187,7 @@ const UserProfile = () => {
                                 type="password"
                                 className="w-full outline-none pl-3"
                                 placeholder="Enter old password"
+                                
                             />
                             <span className="w-max h-max cursor-pointer">
                                 <FaRegEye size={18} />
