@@ -1,11 +1,14 @@
 import {Modal} from "antd";
 import {useState} from "react";
 import {FaRegEye} from "react-icons/fa6";
+import { useSelector } from "react-redux";
 // import {toast} from "react-toastify";
 
 const AdminProfile = () => {
     const [openPassword, setOpenPassword] = useState(false);
     const [openPIN, setOpenPIN] = useState(false);
+    const adminData=useSelector((state)=>state?.bankAppStore?.bankAppStore?.user)
+    console.log(adminData)
     return (
         <>
             <div className="w-full h-max flex flex-col gap-5 p-5">
@@ -20,7 +23,7 @@ const AdminProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Akintunde"}
+                                    value={adminData.fullname.split(" ")[0]}
                                     disabled
                                 />
                             </div>
@@ -29,7 +32,7 @@ const AdminProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Abdulquadri"}
+                                    value={adminData.fullname.split(" ")[1]}
                                     disabled
                                 />
                             </div>
@@ -40,7 +43,7 @@ const AdminProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"akintundeabdulquadri@gmail.com"}
+                                value={adminData.email}
                                 disabled
                             />
                         </div>
@@ -49,7 +52,7 @@ const AdminProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"akintundeabdulquadri@gmail.com"}
+                                value={adminData.phoneNumber    }
                                 disabled
                             />
                         </div>
@@ -59,7 +62,7 @@ const AdminProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"10-02-1960"}
+                                    value={adminData.dob}
                                     disabled
                                 />
                             </div>
@@ -78,7 +81,7 @@ const AdminProfile = () => {
                             <input
                                 type="text"
                                 className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                value={"Lagos"}
+                                value={adminData.address}
                                 disabled
                             />
                         </div>
@@ -88,7 +91,7 @@ const AdminProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Gay"}
+                                    value={adminData.gender}
                                     disabled
                                 />
                             </div>
@@ -97,7 +100,7 @@ const AdminProfile = () => {
                                 <input
                                     type="text"
                                     className="w-full h-10 rounded border border-gray-300 shadow pl-3"
-                                    value={"Savings"}
+                                    value={"current"}
                                     disabled
                                 />
                             </div>

@@ -46,7 +46,7 @@ const Navbar = () => {
                     {/* <button className="text-black text-[15px] bg-[#72e485] hover:bg-[#43ee60] ease-in-out duration-500 py-1 px-4 rounded-lg font-light tracking-wide"><a href="#signin">Sign in</a></button> */}
 
                     <Link
-                        to="/signin"
+                        to="/login"
                         class="relative inline-flex items-center justify-center py-1 px-4 overflow-hidden font-medium text-black transition duration-300 ease-in-out  bg-[#72e485] rounded-lg  group"
                     >
                         <span className="absolute inset-0 flex items-center justify-center w-full h-full text-black duration-300 -translate-x-full bg-[rgb(114,228,133)] group-hover:translate-x-0 ease">

@@ -2,7 +2,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import hero from "../assets/hero.png";
 import logo from "../assets/LOGO.png";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { bankUser } from "../Global/features";
@@ -15,6 +15,7 @@ const Login = () => {
   const [password, setPassWord] = useState("");
   const [passWordError, setPassWordError] = useState(false);
   const [showPassWord, setShowPassWord] = useState(false);
+  const [loading,setLoading]=useState(false);
 
   const handleEmail = (e) => {
     const newData = e.target.value;
@@ -42,6 +43,7 @@ const Login = () => {
     if (!email || !password) {
       alert("please input datas");
     } else {
+      setLoading(true)
       const datas = { email, password };
       const url = "https://bank-app-z92e.onrender.com/login";
       axios
@@ -62,6 +64,12 @@ const Login = () => {
         });
     }
   };
+
+ 
+
+useEffect(()=>{
+    
+},[])
 
   return (
     <div className="w-full h-screen flex p-4">
@@ -125,7 +133,8 @@ const Login = () => {
               className="w-full h-10 rounded bg-[#8c4cfb] text-white"
               onClick={handleLogin}
             >
-              Continue
+              {loading?"Loading....":"Continue"}
+              
             </button>
             <NavLink to={"/reset-password"}>
               <span className="cursor-pointer text-green-600">

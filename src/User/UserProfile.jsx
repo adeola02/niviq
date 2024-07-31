@@ -9,7 +9,7 @@ const UserProfile = () => {
     const [openPassword, setOpenPassword] = useState(false);
     const [openPIN, setOpenPIN] = useState(false);
     const[pin, setPin]=useState("");
-    const userData =useSelector((e)=>e.bankAppStore.user);
+    const userData =useSelector((e)=>e.bankAppStore?.bankAppStore?.user);
 
     const create=()=>{
     //     const data=(pin)

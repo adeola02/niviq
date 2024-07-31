@@ -5,6 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const SignUp = () => {
   const [methodOfSavingsInfo, setMethodOfSavingsInfo] = useState("");
   const [phoneNumber, setPhoneNumber] = useState();
   const [phoneNumberError, setPhoneNumberError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleFirstName = (e) => {
     const newData = e.target.value;
@@ -69,6 +72,10 @@ const SignUp = () => {
       password.length < 8
     ) {
       setPassWordFeaturesError(true);
+      // setPassWordError("")
+    } else {
+      // setPassWordError("")
+      setPassWordFeaturesError(false);
     }
   };
 
@@ -90,7 +97,7 @@ const SignUp = () => {
       setAddressError("address is required");
     }
   };
-  console.log(address)
+  // console.log(address);
 
   const handleGender = (e) => {
     const newData = e.target.value;
@@ -112,34 +119,49 @@ const SignUp = () => {
     }
   };
 
+  const handleContinue = () => {
+    if (!firstName || !surName || !email || !password) {
+      toast.error("input all fields");
+    } else if (passWordFeaturesError === true || emailError.length >= 1) {
+      toast.error("please meet up with the requirements 😎");
+    } else {
+      setStep(2);
+    }
+  };
+
   const handleSignUp = () => {
     if (!dateOfBirth || !address || !gender) {
       alert("required");
     } else {
+      setLoading(true);
       const datas = {
         fullname: firstName + " " + surName,
         email,
         password,
         dob: dateOfBirth,
-        address: address,
+        // address: address,
         phoneNumber,
         gender,
-        methodOfSavings
+        methodOfSavings,
       };
       const url = "https://bank-app-z92e.onrender.com/signup";
-      axios.post(url, datas)
-      .then((res) => {
-     navigate("/user/home")
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+      axios
+        .post(url, datas)
+        .then((res) => {
+          setLoading(false);
+          navigate("/user/home");
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(err.response.data);
+        });
     }
   };
 
-  console.log(methodOfSavings);
+  // console.log(methodOfSavings);
   return (
     <div className="w-full h-screen flex p-4">
+      <ToastContainer />
       <div className="w-[50%] h-full flex flex-col justify-center items-center gap-10 bg-sky-200 rounded shadow-2xl">
         <div className="w-[80%] h-max pl-10 ">
           <p className="text-3xl font-bold">Safe,simple, and smart banking.</p>
@@ -251,7 +273,7 @@ const SignUp = () => {
               <div className="w-full h-max flex flex-col items-center gap-3">
                 <button
                   className="w-full h-10 rounded bg-[#8c4cfb] text-white"
-                  onClick={() => setStep(2)}
+                  onClick={handleContinue}
                 >
                   Continue
                 </button>
@@ -373,7 +395,7 @@ const SignUp = () => {
                     className="w-full h-10 rounded bg-[#8c4cfb] text-white"
                     onClick={handleSignUp}
                   >
-                    Create Account
+                    {loading ? "Loading..." : "Create Account"}
                   </button>
                   <button
                     className="w-full h-10 rounded bg-red-300 text-white"

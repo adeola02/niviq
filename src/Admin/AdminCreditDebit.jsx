@@ -1,8 +1,12 @@
+import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const AdminCreditDebit = () => {
     const [accountNumber,setAccountNumber]=useState();
     const [amount,setAmount]=useState();
+    const [description,setDescription]=useState("");
+    const user=useSelector((user)=>user.bankAppStore?.bankAppStore?.user)
 
     const handleAccountNumber=(e)=>{
      const newData=e.target.value;
@@ -12,6 +16,27 @@ const AdminCreditDebit = () => {
     const handleAmount=(e)=>{
       const newData=e.target.value
         setAmount(newData)
+    }
+
+    const handleDesc=(e)=>{
+        const newData=e.target.value;
+        setDescription(newData)
+    }
+
+    const deposit=()=>{
+        if(!amount || !accountNumber || !description){
+            alert("d")
+        }else{
+            const url=`https://bank-app-z92e.onrender.com/deposit/${user._id}`
+            const data={accountNumber,amount,description}
+            axios.post(url,data)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
     }
 
     return (
@@ -57,10 +82,11 @@ const AdminCreditDebit = () => {
                             type="text"
                             className="w-full h-10 rounded border border-gray-300 shadow pl-3"
                             placeholder="enter description"
+                            onChange={handleDesc}
                         />
                     </div>
                     <div className="w-full h-max flex items-center justify-center">
-                        <button className="w-max h-max px-8 py-2 rounded-full bg-green-700 text-white text-sm">
+                        <button className="w-max h-max px-8 py-2 rounded-full bg-green-700 text-white text-sm" onClick={deposit}>
                             PROCEED
                         </button>
                     </div>

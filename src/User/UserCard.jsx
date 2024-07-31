@@ -4,26 +4,26 @@ import { useSelector } from "react-redux";
 
 const UserCard = () => {
   const [showCard, setShowCard] = useState(false);
-  const user = useSelector((user) => user.bankAppStore.user);
-  const [card,setCard]=useState();
+  const user = useSelector((user) => user.bankAppStore?.bankAppStore?.user);
+  // const [card,setCard]=useState();
 
-  const handleCard = () => {
-    const url = `https://bank-app-z92e.onrender.com/createCardNumber/${user._id}`;
-    axios
-      .post(url)
-      .then((res) => {
-        console.log(res);
-        setShowCard(true);
-        setCard(res?.data?.data)
-      })
-      .catch((err) => console.log(err));
-  };
+  // const handleCard = () => {
+  //   const url = `https://bank-app-z92e.onrender.com/createCardNumber/${user._id}`;
+  //   axios
+  //     .post(url)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setShowCard(true);
+  //       setCard(res?.data?.data)
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="container">
-        {showCard ? (
-          <>
+        {/* {showCard ? (
+          <> */}
             <div className="card">
               <div className="card-inner">
                 <div className="front">
@@ -40,7 +40,7 @@ const UserCard = () => {
                     <p>2150</p>
                     <p>8252</p>
                     <p>6420</p> */}
-                    <p>{card.cardNumber}</p>
+                    <p>{user.cardNumber}</p>
                   </div>
                   <div className="row card-holder">
                     <p>CARD HOLDER</p>
@@ -61,7 +61,7 @@ const UserCard = () => {
                     <div>
                       <img src="https://i.ibb.co/S6JG8px/pattern.png" />
                     </div>
-                    <p>{card.cvv}</p>
+                    <p>{user.cvv}</p>
                   </div>
                   <div className="row card-text">
                     <p>
@@ -79,7 +79,7 @@ const UserCard = () => {
                 </div>
               </div>
             </div>
-          </>
+          {/* </>
         ) : (
           <button
             style={{ background: "#757ed6", width: "15rem", height: "3rem" }}
@@ -87,7 +87,7 @@ const UserCard = () => {
           >
             Generate your card here🤑
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

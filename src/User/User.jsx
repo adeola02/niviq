@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 function User() {
     const [showUserBox, setShowUserBox] = useState(false);
-    const user=useSelector((state)=>state.bankAppStore.user);
+    const user=useSelector((state)=>state.bankAppStore?.bankAppStore?.user);
     const Navigate=useNavigate();
     return (
         <div className="w-full h-screen flex">

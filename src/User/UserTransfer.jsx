@@ -8,7 +8,7 @@ const UserTransfer = () => {
   const [description, setDescription] = useState();
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState();
-  const userId=useSelector((state)=>state.bankAppStore.user._id)
+  const userId=useSelector((state)=>state.bankAppStore?.bankAppStore?.user._id)
 
   const handlePin = (e) => {
     const newData = e.target.value;
