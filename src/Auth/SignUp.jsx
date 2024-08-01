@@ -139,7 +139,7 @@ const SignUp = () => {
         email,
         password,
         dob: dateOfBirth,
-        // address: address,
+        address: address,
         phoneNumber,
         gender,
         methodOfSavings,

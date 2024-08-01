@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { bankUser } from "../Global/features";
+import { toast, ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const nav = useNavigate();
@@ -15,7 +17,7 @@ const Login = () => {
   const [password, setPassWord] = useState("");
   const [passWordError, setPassWordError] = useState(false);
   const [showPassWord, setShowPassWord] = useState(false);
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleEmail = (e) => {
     const newData = e.target.value;
@@ -35,44 +37,47 @@ const Login = () => {
     setPassWordError(true);
 
     if (newData.trim() === "") {
-      setPassWordError("password is required");
+      setPassWordError(true);
+    }else{
+      setPassWordError(false)
     }
   };
 
   const handleLogin = () => {
     if (!email || !password) {
-      alert("please input datas");
-    } else {
-      setLoading(true)
+      toast.error("please input all data");
+    }else if(emailError.length >= 1){
+      toast.error("email is not valid")
+    }
+     else {
+      setLoading(true);
       const datas = { email, password };
       const url = "https://bank-app-z92e.onrender.com/login";
       axios
         .post(url, datas)
         .then((res) => {
+          setLoading(false)
           dispatch(bankUser(res?.data?.data));
           setTimeout(() => {
-            
-              if (res?.data?.data?.isAdmin === "true") {
-                nav("/admin/home");
-              } else if(res?.data?.data?.isAdmin === "false") {
-                nav("/user/home");
-              }
+            if (res?.data?.data?.isAdmin === "true") {
+              nav("/admin/home");
+            } else if (res?.data?.data?.isAdmin === "false") {
+              nav("/user/home");
+            }
           }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          setLoading(false)
+          toast.error(err?.response?.data?.message);
         });
     }
   };
 
- 
-
-useEffect(()=>{
-    
-},[])
+  useEffect(() => {}, []);
 
   return (
     <div className="w-full h-screen flex p-4">
+      <ToastContainer/>
       <div className="w-[50%] h-full flex flex-col justify-center items-center gap-10 bg-sky-200 rounded shadow-2xl">
         <div className="w-[80%] h-max pl-10 ">
           <p className="text-3xl font-bold">Safe,simple, and smart banking.</p>
@@ -124,7 +129,7 @@ useEffect(()=>{
                 </span>
               </div>
               {passWordError ? (
-                <p style={{ color: "red" }}>{passWordError}</p>
+                <p style={{ color: "red" }}>hghhh</p>
               ) : null}
             </div>
           </div>
@@ -133,8 +138,7 @@ useEffect(()=>{
               className="w-full h-10 rounded bg-[#8c4cfb] text-white"
               onClick={handleLogin}
             >
-              {loading?"Loading....":"Continue"}
-              
+              {loading ? "Loading...." : "Continue"}
             </button>
             <NavLink to={"/reset-password"}>
               <span className="cursor-pointer text-green-600">
